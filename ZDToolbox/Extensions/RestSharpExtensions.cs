@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RestSharp;
 using System.ComponentModel.DataAnnotations;
-
+using ZDToolbox.Classes;
 
 namespace ZDToolbox.Extensions
 {

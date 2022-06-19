@@ -1,4 +1,4 @@
-﻿namespace ZDToolbox
+﻿namespace ZDToolbox.Classes
 {
     public class KeyValue<TKey, TValue>
     {

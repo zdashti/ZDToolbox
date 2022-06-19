@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ZDToolbox
+namespace ZDToolbox.Classes
 {
     public enum ContentTypeEnum
     {

@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Extensions.Localization;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-
 namespace ZDToolbox.Extensions
 {
     public static class EnumExtensions
@@ -10,7 +10,7 @@ namespace ZDToolbox.Extensions
             return Convert.ToInt32(enumName);
         }
 
-        public static TAttribute GetAttribute<TAttribute>(this Enum enumValue)
+        public static TAttribute? GetAttribute<TAttribute>(this Enum enumValue)
             where TAttribute : Attribute
         {
             return enumValue.GetType()
@@ -29,9 +29,15 @@ namespace ZDToolbox.Extensions
                 throw new Exception("Undefined Enum value");
         }
 
+        public static string DisplayName<T>(this Enum enumName, IStringLocalizer<T> localizer)
+        {
+            var name = enumName.GetAttribute<DisplayAttribute>()?.Name;
+            return name != null ? localizer.GetString(name) : enumName.ToString();
+        }
+
         public static bool IsValidEnum<T>(this Enum enumName) where T : Enum
         {
-            return Enum.IsDefined(typeof(T), enumName);
+            return enumName != null && Enum.IsDefined(typeof(T), enumName);
         }
     }
 }

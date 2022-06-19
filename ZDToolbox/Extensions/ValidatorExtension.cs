@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace ZDToolbox.Extensions
 {
-    public static class ValidatorHelperExtensions
+    public static class ValidatorExtension
     {
         /// <summary>
         /// تعیین معتبر بودن کد ملی
@@ -18,7 +18,7 @@ namespace ZDToolbox.Extensions
         {
             //در صورتی که کد ملی وارد شده تهی باشد
 
-            if (String.IsNullOrEmpty(nationalCode))
+            if (string.IsNullOrEmpty(nationalCode))
                 throw new Exception("لطفا کد ملی را صحیح وارد نمایید");
 
 
@@ -200,6 +200,91 @@ namespace ZDToolbox.Extensions
                 return false;
 
             return theValue.Split('.').Length == 4 && theValue.Split('.').All(r => byte.TryParse(r, out _));
+        }
+
+        public static bool WordAllIsUpper(this string item)
+        {
+            return item.All(c => !IsUpper(c));
+        }
+
+        public static bool WordAllIsLower(this string item)
+        {
+            return item.All(c => !IsLower(c));
+        }
+
+        public static bool WordAllIsDigit(this string item)
+        {
+            return item.All(c => !IsDigit(c));
+        }
+
+        public static bool WordAllIsLetterOrDigit(this string item)
+        {
+            return item.All(IsLetterOrDigit);
+        }
+
+        public static bool WordAllIsLetter(this string item)
+        {
+            return item.All(IsLetter);
+        }
+
+        public static bool WordIsInPersian(this string item)
+        {
+            return new Regex(@"^[ءآابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی ]+$").IsMatch(item);
+        }
+
+        public static bool NumberIsInPersian(this string item)
+        {
+            return new Regex(@"^[۰۱۲۳۴۵۶۷۸۹]+$").IsMatch(item);
+        }
+        public static bool VowelsInPersian(this string item)
+        {
+            //todo https://stackoverflow.com/questions/10561590/regex-for-check-the-input-string-is-just-in-persian-language/10562331
+            return new Regex(@"[ ‬ٌ ‬ًّ ‬َ ‬ِ ‬ُ ‬ْ ‬]").IsMatch(item);
+        }
+
+        /// <summary>
+        ///     Returns true if the character is a digit between '0' and '9'
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static bool IsDigit(char c)
+        {
+            return c is >= '0' and <= '9';
+        }
+
+        /// <summary>
+        ///     Returns true if the character is between 'a' and 'z'
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static bool IsLower(char c)
+        {
+            return c is >= 'a' and <= 'z';
+        }
+
+        /// <summary>
+        ///     Returns true if the character is between 'A' and 'Z'
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static bool IsUpper(char c)
+        {
+            return c is >= 'A' and <= 'Z';
+        }
+
+        /// <summary>
+        ///     Returns true if the character is upper, lower, or a digit
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static bool IsLetterOrDigit(char c)
+        {
+            return IsUpper(c) || IsLower(c) || IsDigit(c);
+        }
+
+        public static bool IsLetter(char c)
+        {
+            return (IsLetterOrDigit(c) && !IsDigit(c));
         }
     }
 }

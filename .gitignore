@@ -5,3 +5,6 @@
 /.vs
 /ZDToolbox/obj
 /ZDToolbox.v3.ncrunchsolution.user
+/Resources/bin/Debug/net6.0
+/Resources/obj
+/ZDToolbox/bin/Debug/net6.0
